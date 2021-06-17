@@ -1,11 +1,6 @@
 package com.example.practice.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="employee")
@@ -14,32 +9,32 @@ public class Employee {
     // define fields
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
-    @Column(name="name")
-    private String Name;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name="age")
-    private int age;
+    @Column(name = "age")
+    private String age;
 
-    @Column(name="salary")
-    private int salary;
+    @Column(name = "salary")
+    private String salary;
 
-    public Employee() {
+    public Employee(){
 
     }
 
-    public Employee(int id, String name, int age, int salary) {
+    public Employee(int id, String name, String age, String salary) {
         this.id = id;
-        Name = name;
+        this.name = name;
         this.age = age;
         this.salary = salary;
     }
 
-    public Employee(String name, int age, int salary) {
-        Name = name;
+    public Employee(String name, String age, String salary) {
+        this.name = name;
         this.age = age;
         this.salary = salary;
     }
@@ -53,31 +48,26 @@ public class Employee {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
-    public int getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee [id=" + id + ", Name=" + Name + ", age=" + age + ", salary=" + salary + "]";
     }
 }

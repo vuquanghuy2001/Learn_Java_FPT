@@ -11,14 +11,17 @@ import java.util.List;
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
+
     private EmployeeService employeeService;
 
     public EmployeeController(EmployeeService theEmployeeService) {
         employeeService = theEmployeeService;
     }
 
+    // add mapping for "/list"
+
     @GetMapping("/list")
-    public String ListEmployees(Model theModel) {
+    public String listEmployees(Model theModel) {
 
         // get employees from db
         List<Employee> theEmployees = employeeService.findAll();
@@ -26,7 +29,18 @@ public class EmployeeController {
         // add to the spring model
         theModel.addAttribute("employees", theEmployees);
 
-        return "/employees/list-employees";
+        return "employees/list-employees";
+    }
+
+    @GetMapping("/showFormForAdd")
+    public String showFormForAdd(Model theModel) {
+
+        // create model attribute to bind form data
+        Employee theEmployee = new Employee();
+
+        theModel.addAttribute("employee", theEmployee);
+
+        return "employees/employee-form";
     }
 
     @PostMapping("/showFormForUpdate")
@@ -40,8 +54,9 @@ public class EmployeeController {
         theModel.addAttribute("employee", theEmployee);
 
         // send over to our form
-        return "/employees/employee-form";
+        return "employees/employee-form";
     }
+
 
     @PostMapping("/save")
     public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
@@ -53,16 +68,6 @@ public class EmployeeController {
         return "redirect:/employees/list";
     }
 
-    @GetMapping("/showFormForAdd")
-    public String showFormForAdd(Model theModel) {
-
-        // create model attribute to bind form data
-        Employee theEmployee = new Employee();
-
-        theModel.addAttribute("employee", theEmployee);
-
-        return "/employees/employee-form";
-    }
 
     @PostMapping("/delete")
     public String delete(@RequestParam("employeeId") int theId) {
@@ -74,7 +79,6 @@ public class EmployeeController {
         return "redirect:/employees/list";
 
     }
-
     @GetMapping("/search")
     public String delete(@RequestParam("employeeName") String theName,
                          Model theModel) {
@@ -82,4 +86,5 @@ public class EmployeeController {
         theModel.addAttribute("employees", theEmployees);
         return "/employees/list-employees";
     }
+
 }
