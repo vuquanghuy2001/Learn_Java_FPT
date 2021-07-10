@@ -16,6 +16,11 @@ public class HellospringsecurityApplication {
 
     @GetMapping("/users")
     public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name){
-        return String.format("Hello %s!", name);
+        return String.format("User hello %s!", name);
+    }
+
+    @GetMapping("/admin")
+    public String sayAdmin(@RequestParam(value = "myName", defaultValue = "World") String name){
+        return String.format("Admin hello %s!", name);
     }
 }
