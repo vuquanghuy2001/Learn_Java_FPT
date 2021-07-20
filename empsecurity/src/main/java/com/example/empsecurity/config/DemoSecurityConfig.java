@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 import javax.sql.DataSource;
 
@@ -26,20 +27,29 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/employees/showForm*").hasAnyRole("MANAGER","ADMIN")
-                .antMatchers("/employees/save*").hasAnyRole("MANAGER","ADMIN")
-                .antMatchers("/employees/delete").hasAnyRole("ADMIN")
-                .antMatchers("/employees/**").hasAnyRole("EMPLOYEE")
-                .antMatchers("/resources/**").permitAll()
+//        http.authorizeRequests()
+//                .antMatchers("/employees/showForm*").hasAnyRole("MANAGER","ADMIN")
+//                .antMatchers("/employees/save*").hasAnyRole("MANAGER","ADMIN")
+//                .antMatchers("/employees/delete").hasRole("ADMIN")
+//                .antMatchers("/employees/**").hasRole("EMPLOYEE")
+//                .antMatchers("/resources/**").permitAll()
+//                .and()
+//                .formLogin()
+//                    .loginPage("/showMyLoginPage")
+//                    .loginProcessingUrl("/authenticateTheUser")
+//                    .permitAll()
+//                .and()
+//                .logout().permitAll()
+//                .and()
+//                .exceptionHandling().accessDeniedPage("/access-denied");
+
+        http
+                .authorizeRequests()
+                .antMatchers("api/emp/**").hasRole("ADMIN")
                 .and()
-                .formLogin()
-                    .loginPage("/showMyLoginPage")
-                    .loginProcessingUrl("/authenticateTheUser")
-                    .permitAll()
+                .httpBasic()
                 .and()
-                .logout().permitAll()
-                .and()
-                .exceptionHandling().accessDeniedPage("/access-denied");
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 }
