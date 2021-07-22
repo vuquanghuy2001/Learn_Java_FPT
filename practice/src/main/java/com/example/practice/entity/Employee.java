@@ -9,34 +9,28 @@ public class Employee {
     // define fields
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name="name")
     private String name;
 
-    @Column(name = "age")
-    private String age;
+    @Column(name="wage")
+    private String wage;
 
-    @Column(name = "salary")
-    private String salary;
-
-    public Employee(){
+    public Employee() {
 
     }
 
-    public Employee(int id, String name, String age, String salary) {
+    public Employee(int id, String name, String wage) {
         this.id = id;
         this.name = name;
-        this.age = age;
-        this.salary = salary;
+        this.wage = wage;
     }
 
-    public Employee(String name, String age, String salary) {
-        this.name = name;
-        this.age = age;
-        this.salary = salary;
+    public Employee(String wage) {
+        this.wage = wage;
     }
 
     public int getId() {
@@ -55,19 +49,20 @@ public class Employee {
         this.name = name;
     }
 
-    public String getAge() {
-        return age;
+    public String getWage() {
+        return wage;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setWage(String wage) {
+        this.wage = wage;
     }
 
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", wage='" + wage + '\'' +
+                '}';
     }
 }
