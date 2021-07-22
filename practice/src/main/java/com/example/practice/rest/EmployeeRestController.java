@@ -19,7 +19,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/emp")
-    List<Employee> findAllEmployees(){
+    List<Employee> findAllEmployees() {
         return repository.findAll();
     }
 

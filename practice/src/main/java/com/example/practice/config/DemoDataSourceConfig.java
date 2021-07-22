@@ -12,7 +12,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.example.empsecurity.dao"})
+@EnableJpaRepositories(basePackages = {"com.example.practice.dao"})
 public class DemoDataSourceConfig {
 
     @Primary

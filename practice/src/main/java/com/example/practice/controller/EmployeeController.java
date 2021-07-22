@@ -4,7 +4,10 @@ import com.example.practice.entity.Employee;
 import com.example.practice.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/list")
-    public String ListEmployees(Model theModel) {
+    public String findAllEmployees(Model theModel) {
 
         // get employees from db
         List<Employee> theEmployees = employeeService.findAllEmployees();
@@ -30,7 +33,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
+    public String createEmployee(@ModelAttribute("employee") Employee theEmployee) {
 
         // save the employee
         employeeService.createEmployee(theEmployee);
