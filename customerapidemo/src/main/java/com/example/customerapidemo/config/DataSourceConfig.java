@@ -13,25 +13,24 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.example.customerapidemo.dao"})
-public class DemoDataSourceConfig {
-
+public class DataSourceConfig {
     @Primary
     @Bean
     @ConfigurationProperties(prefix = "app.datasource")
-    public DataSource appDataSource() {
-        return DataSourceBuilder.create().build();
+    public DataSource appDataSource() {return DataSourceBuilder.create().build();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.data.jpa.entity")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, DataSource appDataSource) {
+    @ConfigurationProperties(prefix="spring.data.jpa.entity")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            EntityManagerFactoryBuilder builder, DataSource appDataSource) {
         return builder
                 .dataSource(appDataSource)
                 .build();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "security.datasource")
+    @ConfigurationProperties(prefix="security.datasource")
     public DataSource securityDataSource() {
         return DataSourceBuilder.create().build();
     }

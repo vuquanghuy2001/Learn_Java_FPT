@@ -1,21 +1,14 @@
 package com.example.customerapidemo.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name="customer")
+@Table(name = "customer")
 public class Customer {
 
-    // define fields
-
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @Column(name="first_name")
@@ -27,10 +20,7 @@ public class Customer {
     @Column(name="email")
     private String email;
 
-
-    // define constructors
-
-    public Customer() {
+    public Customer(){
 
     }
 
@@ -41,14 +31,11 @@ public class Customer {
         this.email = email;
     }
 
-
     public Customer(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
-
-    // define getter/setter
 
     public int getId() {
         return id;
@@ -82,11 +69,13 @@ public class Customer {
         this.email = email;
     }
 
-    // define tostring
-
     @Override
     public String toString() {
-        return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
-
 }
