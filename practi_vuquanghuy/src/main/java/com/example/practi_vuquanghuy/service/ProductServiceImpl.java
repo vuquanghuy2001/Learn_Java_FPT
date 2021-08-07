@@ -30,6 +30,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void buyProduct(Product theProduct) {
-
+        repository.save(theProduct);
     }
 }

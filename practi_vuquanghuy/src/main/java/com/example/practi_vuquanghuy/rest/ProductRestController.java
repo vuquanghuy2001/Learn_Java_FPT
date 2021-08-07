@@ -25,4 +25,10 @@ public class ProductRestController {
         productService.addProduct(newProduct);
         return newProduct;
     }
+
+    @PutMapping("/pro/{id}")
+    public Product buyProduct(@RequestBody Product newProduct) {
+        productService.buyProduct(newProduct);
+        return newProduct;
+    }
 }
