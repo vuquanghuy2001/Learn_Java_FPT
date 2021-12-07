@@ -1,0 +1,85 @@
+<!doctype html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard/_layout/master}">
+
+<head>
+
+    <title>Feedback</title>
+
+</head>
+
+<body>
+
+        <!-- Main -->
+            <div layout:fragment="content" class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-light icon-gradient bg-sunny-morning"></i>
+                            </div>
+                            <div>
+                                Feedback
+                                <div class="page-title-subheading">
+                                    View list and Details feedback
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body display_data">
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">
+                                        Name
+                                    </label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${feedback.name}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Email</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${feedback.email}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Message</label>
+                                    <div class="col-md-9 col-xl-8" style="font-size: 20px">
+                                        <p th:text="${feedback.message}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Rating</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p>
+                                            <i th:each="i: ${#numbers.sequence(1, feedback.rating)}" class="fa fa-star text-warning"></i>
+
+                                            <i th:each="i: ${#numbers.sequence(1, 5 - feedback.rating)}" th:if="${feedback.rating < 5}" class="fa fa-star text-black-50"></i>
+
+                                            <span th:text="${'(' + feedback.rating + ' star)'}"></span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- End Main -->
+
+</body>
+
+</html>

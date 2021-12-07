@@ -1,0 +1,132 @@
+<!doctype html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard/_layout/master}">
+
+<head>
+
+    <title>Restaurant</title>
+
+</head>
+
+<body>
+
+            <!-- Main -->
+            <div layout:fragment="content" class="app-main__inner">
+
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-map-2 icon-gradient bg-amy-crisp"></i>
+                            </div>
+                            <div>
+                                Restaurant
+                                <div class="page-title-subheading">
+                                    View, create, update, delete and manage.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+
+
+                                <form method="post" enctype="multipart/form-data"
+                                      th:action="${#request.requestURI.endsWith('/create')} ? @{|/admin/restaurant/create|} : @{|/admin/restaurant/${restaurant.id}/edit|}"
+                                      th:object="${restaurant}">
+
+                                    <input type="hidden" th:field="*{id}">
+                                    <input type="hidden" th:field="*{image}">
+
+                                    <div class="position-relative row form-group">
+                                        <label class="col-md-3 text-md-right col-form-label">Avatar</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <img style="height: 200px; cursor: pointer;"
+                                                 class="thumbnail circle" data-toggle="tooltip"
+                                                 title="Click to change the image" data-placement="bottom"
+                                                 th:src="${restaurant.image != null && restaurant.image != ''} ? @{|../front/data-images/restaurants/${restaurant.image}|} : @{|../dashboard/assets/images/add-image-icon.jpg|}"
+                                                 alt="Add Image">
+                                            <input name="image_file" type="file" onchange="changeImg(this)" accept="image/*"
+                                                   class="image form-control-file" style="display: none;">
+                                            <input type="hidden" name="image_old" th:value="${restaurant.image}">
+                                            <small class="form-text text-muted">
+                                                Look at it, it looks great! (Click on the image to change)
+                                            </small>
+
+                                            <div th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="position-relative row form-group">
+                                        <label for="name" class="col-md-3 text-md-right col-form-label">Name</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{name}" required name="name" id="name" placeholder="Name" type="text"
+                                                   class="form-control">
+
+                                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="position-relative row form-group">
+                                        <label class="col-md-3 text-md-right col-form-label">Address</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{address}" required name="address" id="Address" placeholder="Address"
+                                                   class="form-control">
+
+                                            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="position-relative row form-group">
+                                        <label for="description"
+                                               class="col-md-3 text-md-right col-form-label">Description</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <textarea th:field="*{description}" required name="description" id="description"></textarea>
+
+                                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="position-relative row form-group mb-1">
+                                        <div class="col-md-9 col-xl-8 offset-md-2">
+                                            <a href="../admin/restaurant/" class="border-0 btn btn-outline-danger mr-1">
+                                                    <span class="btn-icon-wrapper pr-1 opacity-8">
+                                                        <i class="fa fa-times fa-w-20"></i>
+                                                    </span>
+                                                <span>Cancel</span>
+                                            </a>
+
+                                            <span th:replace="dashboard/_fragments/button :: submit"></span>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
+                <script>
+                    CKEDITOR.replace('description');
+                    //https://ckeditor.com/docs/ckfinder/ckfinder3/#!/guide/dev_ckeditor
+                </script>
+
+            </div>
+            <!-- End Main -->
+
+</body>
+
+</html>

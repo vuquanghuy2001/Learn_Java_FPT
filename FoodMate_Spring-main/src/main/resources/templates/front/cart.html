@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/_layout/master}">
+
+<head>
+
+    <!-- Title -->
+    <title>Check Out</title>
+
+</head>
+
+<body>
+
+        <!--  MAIN HERE -->
+
+    <main layout:fragment="content">
+
+        <!-- Page Title -->
+        <div class="page-title bg-dark dark">
+            <!-- BG Image -->
+            <div class="bg-image bg-parallax"><img src="data-images/photos/bg-croissant.jpg" alt="">
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-4">
+                        <h1 class="mb-0">Cart</h1>
+                        <h4 class="text-muted mb-0">Some informations about your cart</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section -->
+        <section class="section bg-light">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-10 col-lg-12 m-auto">
+
+                        <div class="cart-details shadow bg-white mb-4">
+                            <div class="bg-dark dark p-4">
+                                <h5 class="mb-0">
+                                    You cart
+
+                                    <span class="float-right ">
+                                    <button class="action-icon border-0 bg-transparent"
+                                            onclick="confirm('Destroy all cart?') === true ? destroyCart() : ''">
+                                        <i class="ti ti-close"></i>
+                                    </button>
+                                </span>
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+                        <div th:if="${cartsGroupByRestaurant.size() > 0}"
+                             class="cart-details-all" >
+                            <div th:each="carts : ${cartsGroupByRestaurant}" class="cart-details shadow bg-white mb-4">
+                                <div class="bg-white p-4 border-bottom">
+                                    <h5 class="mb-0 text-warning">
+                                        <a th:href="@{|/restaurant/${carts.get(0).options.get('restaurant_id')}|}" >
+                                            <span th:text="${carts.get(0).options.get('restaurant_name')}"></span>
+                                            <i class="ti ti-angle-right" style="font-size: 80%"></i>
+                                        </a>
+
+                                        <span class="float-right">
+                                            <form action="/cart/destroy">
+                                                <input th:each="cart : ${carts}" type="hidden"
+                                                       name="rowIds[]" th:value="${cart.rowId}">
+
+                                                <button th:data-confirm="|Delete cart Restaurant: ${carts.get(0).options.get('restaurant_name')}?|"
+                                                        onclick="return confirm(this.getAttribute('data-confirm'))"
+                                                        class="action-icon border-0 bg-transparent">
+                                                    <i class="ti ti-close"></i>
+                                                </button>
+                                            </form>
+                                        </span>
+                                    </h5>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="cart-table-show table-hover">
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th class="text-right">Price</th>
+                                            <th class="text-center">Qty</th>
+                                            <th class="text-right">Total</th>
+                                            <th class="text-right"></th>
+                                        </tr>
+
+                                        <tr th:each="cart : ${carts}" th:data-rowId="${cart.rowId}">
+                                            <td>
+                                                <img th:src="@{|/front/data-images/products/${cart.options.get('image')}|}"
+                                                     alt="product.image" style="max-height: 80px; min-width: 90px">
+                                            </td>
+                                            <td class="title">
+                                                <span class="name">
+                                                    <a th:href="@{|/menu/${cart.id}|}" data-toggle="modal" th:text="${cart.name}"></a>
+                                                </span>
+                                            </td>
+                                            <td class="price" th:text="${'$' + cart.price}"></td>
+                                            <td class="price" style="width: 110px">
+                                                <form th:action="@{|/cart/update/${cart.rowId}|}"
+                                                      onkeydown="return event.key !== 'Enter';">
+                                                    <input class="form-control border-light"
+                                                           style="font-weight: bold; width: 65px"
+                                                           type="number" name="qty" min=1
+                                                           th:value="${cart.qty}"
+
+                                                           th:data-rowId="|${cart.rowId}|"
+                                                           th:onchange="|updateCart(this.getAttribute('data-rowId'), this.form['qty'].value)|">
+                                                </form>
+
+                                            </td>
+                                            <td class="price cart-item-total-show" th:text="${'$' + #numbers.formatDecimal(cart.price * cart.qty, 1, 2)}"></td>
+                                            <td class="actions">
+                                                <button class="action-icon"
+                                                        th:data-rowId="|${cart.rowId}|"
+                                                        th:onclick="|confirm('Delete this item?') === true ? deleteCart(this.getAttribute('data-rowId')) : ''|">
+                                                    <i class="ti ti-close"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cart-details shadow bg-white mb-4">
+                            <div th:if="${cartsGroupByRestaurant.size() <= 0}" class="cart-empty">
+                                <i class="ti ti-shopping-cart"></i>
+                                <p>Your cart is empty...</p>
+                            </div>
+                        </div>
+
+                        <div class="cart-details shadow bg-white mb-4">
+                            <div th:if="${cartsGroupByRestaurant.size() > 0}" class="cart-summary ">
+                                <div class="row">
+                                    <div class="col-8 text-right text-muted">Order total:</div>
+                                    <div class="col-4"><strong>$<span
+                                            class="cart-products-total-show" th:text="${total}"></span></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8 text-right text-muted">Devliery:</div>
+                                    <div class="col-4"><strong>$<span class="cart-delivery-show">0.00</span></strong>
+                                    </div>
+                                </div>
+                                <hr class="hr-sm">
+                                <div class="row text-lg">
+                                    <div class="col-8 text-right text-muted">Total:</div>
+                                    <div class="col-4"><strong>$<span
+                                            class="cart-total-show" th:text="${total}"></span></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${cartsGroupByRestaurant.size() > 1}" class="mb-3 mr-1 text-right cart-note">
+                            <span class="text-warning font-weight-bold" style="font-size: 110%">
+                               * Note: Your cart is separated into
+                                <span style="text-decoration: underline; font-size: 110%"
+                                      th:text="${cartsGroupByRestaurant.size() + ' orders'}"></span>
+                                because you have selected the product of many different restaurants.
+                            </span>
+                        </div>
+
+                        <a th:if="${cartsGroupByRestaurant.size() > 0}"
+                           href="../checkout" class="panel-cart-action btn btn-secondary btn-block btn-lg"><span>Go to checkout</span></a>
+
+                        <a th:if="${cartsGroupByRestaurant.size() <= 0}"
+                           href="../menu" class="panel-cart-action btn btn-secondary btn-block btn-lg"><span>Go to menu</span></a>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+        <!--  end MAIN HERE -->
+
+</body>
+
+
+</html>

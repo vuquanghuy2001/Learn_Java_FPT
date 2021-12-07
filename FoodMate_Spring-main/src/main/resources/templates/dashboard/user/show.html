@@ -1,0 +1,145 @@
+<!doctype html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard/_layout/master}">
+
+<head>
+
+    <title>User</title>
+
+</head>
+
+<body>
+
+            <!-- Main -->
+            <div layout:fragment="content" class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-users icon-gradient bg-love-kiss"></i>
+                            </div>
+                            <div>
+                                User
+                                <div class="page-title-subheading">
+                                    View, create, update, delete and manage.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                    <li class="nav-item">
+                        <a th:href="@{|/admin/user/${user.id}/edit|}" class="nav-link">
+                                <span class="btn-icon-wrapper pr-2 opacity-8">
+                                    <i class="fa fa-edit fa-w-20"></i>
+                                </span>
+                            <span>Edit</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item delete">
+                        <form class="d-inline"
+                              th:action="@{|/admin/user/${user.id}|}" th:method="DELETE">
+
+                            <span th:replace="dashboard/_fragments/button :: deleteOnShow"></span>
+
+                        </form>
+                    </li>
+                </ul>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body display_data">
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Avatar</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p>
+                                            <img style="height: 200px;" class="rounded-circle" data-toggle="tooltip"
+                                                 title="Avatar" data-placement="bottom"
+                                                 th:src="@{|../front/data-images/user/${user.image}|}"
+                                                 alt="user.image">
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">
+                                        User Name
+                                    </label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.username}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Email</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.email}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Roles</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.authoritiesString}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">
+                                        Gender</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.gender ? 'Male' : 'Female'}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">First Name</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.firstName}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Last Name</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.lastName}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Phone</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.phone}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Address</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.address}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Enabled</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${user.enabled ? 'Yes' : 'No'}">Yes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Main -->
+
+</body>
+
+</html>

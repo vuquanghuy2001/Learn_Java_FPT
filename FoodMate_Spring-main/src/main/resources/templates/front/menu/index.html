@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/_layout/master}">
+
+<head>
+
+    <!-- Title -->
+    <title>Menu</title>
+
+</head>
+
+<body>
+
+        <!--  MAIN HERE -->
+
+    <main layout:fragment="content">
+
+        <!-- Page Title -->
+        <div class="page-title bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-4">
+                        <h1 class="mb-0">Menu</h1>
+
+                        <h4 class="text-muted mb-0">
+                            For all restaurant.
+                            <a href="../restaurant">
+                                (Select restaurant)
+                            </a>
+                        </h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <div class="container">
+                <form action="" method="get" class="">
+                    <input type="hidden" name="restaurant_id" value="">
+                    <div class="row text-lg">
+
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label class="custom-control custom-radio">
+                                <input type="checkbox" class="custom-control-input"
+                                       name="tag[]"
+                                       value="Breakfast"
+                                       checked
+                                       onchange="this.form.submit();">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Breakfast</span>
+
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label class="custom-control custom-radio">
+                                <input type="checkbox" class="custom-control-input"
+                                       name="tag[]"
+                                       value="Lunch"
+                                       checked
+                                       onchange="this.form.submit();">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Lunch</span>
+
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label class="custom-control custom-radio">
+                                <input type="checkbox" class="custom-control-input"
+                                       name="tag[]"
+                                       value="Dinner"
+                                       checked
+                                       onchange="this.form.submit();">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Dinner</span>
+
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label class="custom-control custom-radio">
+                                <input type="checkbox" class="custom-control-input"
+                                       name="tag[]"
+                                       value="Snacks"
+                                       checked
+                                       onchange="this.form.submit();">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Snacks</span>
+
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="form-group col-sm-12">
+                            <input type="text" name="search" value="" placeholder="Search..."
+                                   class="form-control">
+                        </div>
+                    </div>
+                </form>
+
+                <div th:replace="front/_fragments/menu-list :: menu-list (products = ${products}, productCategories = ${productCategories})"
+                     class="row no-gutters"></div>
+
+            </div>
+        </div>
+
+    </main>
+
+        <!--  end MAIN HERE -->
+
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/_layout/master}">
+
+<head>
+
+    <!-- Title -->
+    <title>Restaurant</title>
+
+</head>
+
+<body>
+
+        <!--  MAIN HERE -->
+
+    <main layout:fragment="content">
+
+        <!-- Page Title -->
+        <div class="page-title bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-4">
+                        <h1 class="mb-0">Restaurant</h1>
+                        <h4 class="text-muted mb-0">Some information about our restaurant</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="page-content bg-light">
+            <div class="container">
+                <form action="" method="get" class="">
+
+                    <div class="row mb-4">
+                        <div class="form-group col-sm-12">
+                            <input type="text" name="search" value=""
+                                   placeholder="Enter location or name of restaurant..."
+                                   class="form-control">
+                        </div>
+                    </div>
+                </form>
+                <!-- Restaurant -->
+                <div th:each="restaurant : ${restaurants}" class="special-offer mb-5 animated" data-animation="fadeIn">
+                    <img th:src="@{|../front/data-images/restaurants/${restaurant.image}|}"
+                         alt="restaurant.image" class="special-offer-image">
+                    <div class="special-offer-content">
+                        <a th:href="@{|/restaurant/${restaurant.id}|}">
+                            <h2 class="mb-2" th:text="${restaurant.name}"></h2>
+                        </a>
+                        <h5 class="text-muted mb-5" th:text="${restaurant.address}"></h5>
+
+                        <span th:utext="${restaurant.description}"></span>
+
+                        <br>
+                        <a th:href="@{|/restaurant/${restaurant.id}|}" class="btn btn-outline-primary btn-lg mt-5">
+                            <span>Menu & details</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+        <!--  end MAIN HERE -->
+
+</body>
+
+
+</html>

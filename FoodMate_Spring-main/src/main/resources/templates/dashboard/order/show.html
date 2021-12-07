@@ -1,0 +1,147 @@
+<!doctype html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard/_layout/master}">
+
+<head>
+
+    <title>Order</title>
+
+</head>
+
+<body>
+
+            <!-- Main -->
+            <div layout:fragment="content" class="app-main__inner">
+                <div class="app-page-title mb-3">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-shopbag icon-gradient bg-mixed-hopes"></i>
+                            </div>
+                            <div>
+                                Order
+                                <div class="page-title-subheading">
+                                    List, Details, Accept, Reject order                        </div>
+                            </div>
+                        </div>
+
+                        <div class="page-title-actions mt-3">
+                            <div class="badge badge-success opacity-9 mt-2 mr-3" th:text="${order.status}"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body display_data">
+
+                                <h3 class="text-center">Products list</h3>
+                                <hr>
+
+                                <div class="table-responsive">
+                                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th class="text-center">Quantity</th>
+                                            <th class="text-center">Unit Price</th>
+                                            <th class="text-center">Amount</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr th:each="orderDetail : ${order.orderDetails}">
+                                            <td>
+                                                <div class="widget-content p-0">
+                                                    <div class="widget-content-wrapper">
+                                                        <div class="widget-content-left mr-3">
+                                                            <div class="widget-content-left">
+                                                                <img style="height: 60px;"
+                                                                     data-toggle="tooltip" title="Image"
+                                                                     data-placement="bottom"
+                                                                     th:src="@{|../front/data-images/products/${orderDetail.product.image}|}"
+                                                                     alt="orderDetail.product.image">
+                                                            </div>
+                                                        </div>
+                                                        <div class="widget-content-left flex2">
+                                                            <div class="widget-heading" th:text="${orderDetail.product.name}"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center" th:text="${orderDetail.qty}"></td>
+                                            <td class="text-center" th:text="${orderDetail.amount + '$'}"></td>
+                                            <td class="text-center" th:text="${(orderDetail.amount * orderDetail.qty) + '$'}"></td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h3 class="text-center mt-5">Order info</h3>
+                                <hr>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">
+                                        Full Name
+                                    </label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${order.user.first_name + ', ' + order.user.last_name}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Phone</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${order.user.phone}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">Email</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${order.user.email}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">
+                                        Delivery address
+                                    </label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${order.deliveryAddress}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">
+                                        Total Amount</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <p th:text="${'$' + order.totalAmount}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="position-relative row form-group">
+                                    <label class="col-md-3 text-md-right col-form-label">
+                                        Status</label>
+                                    <div class="col-md-9 col-xl-8">
+                                        <div class="badge badge-success opacity-9 mt-2" th:text="${order.status}"></div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Main -->
+
+</body>
+
+</html>

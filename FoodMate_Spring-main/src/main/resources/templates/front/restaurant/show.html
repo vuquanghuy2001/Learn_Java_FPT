@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/_layout/master}">
+
+<head>
+
+    <!-- Title -->
+    <title th:text="${'Restaurant - ' + restaurant.name}"></title>
+
+</head>
+
+<body>
+
+        <!--  MAIN HERE -->
+
+    <main layout:fragment="content">
+
+        <!-- Section -->
+        <section class="section section-bg-edge mb-3 mt-2">
+
+            <div class="section section-double border-top page-content bg-light">
+                <div class="row no-gutters flex-md-row-reverse">
+                    <div class="container col-xl-4 col-md-5" data-local-scroll>
+                        <h2 th:text="${restaurant.name}"></h2>
+                        <p class="lead text-muted" th:text="${restaurant.address}"></p>
+                        <ul class="list-check text-lg" th:utext="${restaurant.description}"></ul>
+                        <a href="#menu" class="btn btn-primary"><span>Go to Menu</span></a>
+                        <a href="/restaurant" class="btn btn-link"><span>Back</span></a>
+                    </div>
+                    <div class="image left bottom col-md-7">
+                        <div class="bg-image">
+                            <img th:src="@{|data-images/restaurants/${restaurant.image}|}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Page Title -->
+        <div class="page-title bg-light pt-4 pb-5" id="menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h1 class="mb-0">Menu</h1>
+
+                        <h4 class="text-muted mb-0">
+                            For this restaurant
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <div class="container">
+                <form action="" method="get" class="">
+                    <input type="hidden" name="restaurant_id" value="">
+                    <div class="row text-lg">
+
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label class="custom-control custom-radio">
+                                <input type="checkbox" class="custom-control-input"
+                                       name="tag[]"
+                                       value="Breakfast"
+                                       checked
+                                       onchange="this.form.submit();">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Breakfast</span>
+
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label class="custom-control custom-radio">
+                                <input type="checkbox" class="custom-control-input"
+                                       name="tag[]"
+                                       value="Lunch"
+                                       checked
+                                       onchange="this.form.submit();">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Lunch</span>
+
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label class="custom-control custom-radio">
+                                <input type="checkbox" class="custom-control-input"
+                                       name="tag[]"
+                                       value="Dinner"
+                                       checked
+                                       onchange="this.form.submit();">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Dinner</span>
+
+                            </label>
+                        </div>
+                        <div class="col-md-3 col-sm-6 form-group">
+                            <label class="custom-control custom-radio">
+                                <input type="checkbox" class="custom-control-input"
+                                       name="tag[]"
+                                       value="Snacks"
+                                       checked
+                                       onchange="this.form.submit();">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Snacks</span>
+
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="form-group col-sm-12">
+                            <input type="text" name="search" value="" placeholder="Search..."
+                                   class="form-control">
+                        </div>
+                    </div>
+                </form>
+
+                <div th:replace="front/_fragments/menu-list :: menu-list (products = ${products}, productCategories = ${productCategories})"
+                     class="row no-gutters"></div>
+            </div>
+        </div>
+
+    </main>
+
+        <!--  end MAIN HERE -->
+
+</body>
+
+
+</html>

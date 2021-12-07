@@ -1,0 +1,258 @@
+<!doctype html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard/_layout/master}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>User</title>
+
+</head>
+
+<body>
+
+            <!-- Main -->
+            <div layout:fragment="content" class="app-main__inner">
+
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-users icon-gradient bg-love-kiss"></i>
+                            </div>
+                            <div>
+                                User
+                                <div class="page-title-subheading">
+                                    View, create, update, delete and manage.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <form method="post" enctype="multipart/form-data"
+                                      th:action="${#request.requestURI.endsWith('/create')} ? @{|/admin/user/create|} : @{|/admin/user/${user.id}/edit|}"
+                                      th:object="${user}">
+
+                                    <input type="hidden" th:field="*{id}">
+                                    <input type="hidden" th:field="*{image}">
+                                    <input type="hidden" th:field="*{authorities}" sec:authorize="!hasAnyRole('ROLE_HOST', 'ROLE_ADMIN')">
+
+                                    <div class="position-relative row form-group">
+                                        <label for="image"
+                                               class="col-md-3 text-md-right col-form-label">Avatar</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <img style="height: 200px; cursor: pointer;"
+                                                 class="thumbnail rounded-circle" data-toggle="tooltip"
+                                                 title="Click to change the image" data-placement="bottom"
+                                                 th:src="${user.image != null && user.image != ''} ? @{|../front/data-images/user/${user.image}|} : @{|../dashboard/assets/images/add-image-icon.jpg|}"
+                                                 alt="Avatar">
+                                            <input name="image_file" id="image" type="file" onchange="changeImg(this)" accept="image/*"
+                                                   class="image form-control-file" style="display: none;">
+                                            <input type="hidden" name="image_old" th:value="${user.image}">
+                                            <small class="form-text text-muted">
+                                                Look at it, it looks great! (Click on the image to change)
+                                            </small>
+
+                                            <div th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="user_name" class="col-md-3 text-md-right col-form-label">User
+                                            Name</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{username}" required name="user_name" id="user_name"
+                                                   placeholder="User_name" type="text" class="form-control">
+
+                                            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="email"
+                                               class="col-md-3 text-md-right col-form-label">Email</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{email}" required name="email" id="email" placeholder="Email" type="email"
+                                                   class="form-control" value="HieuNDTH1908028@fpt.edu.vn">
+
+                                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group" sec:authorize="hasAnyRole('ROLE_HOST')">
+                                        <label for="password"
+                                               class="col-md-3 text-md-right col-form-label">Password</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{password}" name="password" id="password" placeholder="Password" type="password"
+                                                   autocomplete="new-password" class="form-control">
+
+                                            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group" sec:authorize="hasAnyRole('ROLE_HOST')">
+                                        <label for="password_confirmation"
+                                               class="col-md-3 text-md-right col-form-label">Confirm Password</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input name="password_confirmation" id="password_confirmation"
+                                                   placeholder="Confirm Password" type="password"
+                                                   class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group" sec:authorize="hasAnyRole('ROLE_HOST', 'ROLE_ADMIN')">
+                                        <label class="col-md-3 text-md-right col-form-label">Roles</label>
+
+                                        <div class="col-md-9 col-xl-8 mt-2">
+                                            <div class="form-check mr-3 d-inline-block">
+                                                <input class="form-check-input" type="checkbox"
+                                                       name="arrAuthorities[]" value="ROLE_HOST"
+                                                       id="host" th:checked="${user.authoritiesListString.contains('ROLE_HOST')}">
+                                                <label class="form-check-label" for="host">
+                                                    Host
+                                                </label>
+                                            </div>
+                                            <div class="form-check mr-3 d-inline-block">
+                                                <input class="form-check-input" type="checkbox"
+                                                       name="arrAuthorities[]" value="ROLE_ADMIN"
+                                                       id="admin" th:checked="${user.authoritiesListString.contains('ROLE_ADMIN')}">
+                                                <label class="form-check-label" for="admin">
+                                                    Admin
+                                                </label>
+                                            </div>
+                                            <div class="form-check mr-3 d-inline-block">
+                                                <input class="form-check-input" type="checkbox"
+                                                       name="arrAuthorities[]" value="ROLE_ADMIN_ReadOnly"
+                                                       id="admin_ReadOnly" th:checked="${user.authoritiesListString.contains('ROLE_ADMIN_ReadOnly')}">
+                                                <label class="form-check-label" for="admin_ReadOnly">
+                                                    Admin_ReadOnly
+                                                </label>
+                                            </div>
+                                            <div class="form-check mr-3 d-inline-block">
+                                                <input class="form-check-input" type="checkbox"
+                                                       name="arrAuthorities[]" value="ROLE_STAFF"
+                                                       id="staff" th:checked="${user.authoritiesListString.contains('ROLE_STAFF')}">
+                                                <label class="form-check-label" for="staff">
+                                                    Staff
+                                                </label>
+                                            </div>
+                                            <div class="form-check mr-3 d-inline-block">
+                                                <input class="form-check-input" type="checkbox"
+                                                       name="arrAuthorities[]" value="ROLE_CUSTOMER"
+                                                       id="customer" th:checked="${user.authoritiesListString.contains('ROLE_CUSTOMER')}">
+                                                <label class="form-check-label" for="customer">
+                                                    Customer
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="first_name" class="col-md-3 text-md-right col-form-label">
+                                            First Name
+                                        </label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{firstName}" required name="first_name" id="first_name"
+                                                   placeholder="First_name" type="text" class="form-control">
+
+                                            <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="last_name"
+                                               class="col-md-3 text-md-right col-form-label">Last Name</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{lastName}" required name="last_name" id="last_name"
+                                                   placeholder="Last_name" type="text" class="form-control">
+
+                                            <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label class="col-md-3 text-md-right col-form-label">Gender</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <div class="position-relative form-check pt-sm-2 mr-3 d-inline-block">
+                                                <input th:field="*{gender}" name="gender" id="male" type="radio"
+                                                       value=1 class="form-check-input">
+                                                <label for="male" class="form-check-label">Male</label>
+                                            </div>
+
+                                            <div class="position-relative form-check pt-sm-2 mr-3 d-inline-block">
+                                                <input th:field="*{gender}" name="gender" id="female" type="radio"
+                                                       value=0 class="form-check-input">
+                                                <label for="female" class="form-check-label">Female</label>
+                                            </div>
+
+                                            <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="phone "
+                                               class="col-md-3 text-md-right col-form-label">Phone</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{phone}" required name="phone " id="phone " placeholder="Phone " type="tel"
+                                                   class="form-control">
+
+                                            <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="address"
+                                               class="col-md-3 text-md-right col-form-label">Address</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{address}" required name="address" id="address" placeholder="Address" type="text"
+                                                   class="form-control" value="8, Ton That Thuyet, Ha Noi, Viet Nam">
+
+                                            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="enabled" class="col-md-3 text-md-right col-form-label">Enabled</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <div class="position-relative form-check pt-sm-2">
+                                                <input th:field="*{enabled}" name="enabled" id="enabled" type="checkbox"
+                                                       value=1 class="form-check-input">
+                                                <label for="enabled" class="form-check-label">Enabled</label>
+                                            </div>
+
+                                            <div th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group mb-1">
+                                        <div class="col-md-9 col-xl-8 offset-md-2">
+                                            <a href="../#" class="border-0 btn btn-outline-danger mr-1">
+                                                    <span class="btn-icon-wrapper pr-1 opacity-8">
+                                                        <i class="fa fa-times fa-w-20"></i>
+                                                    </span>
+                                                <span>Cancel</span>
+                                            </a>
+
+                                            <span th:replace="dashboard/_fragments/button :: submit"></span>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Main -->
+
+</body>
+
+</html>

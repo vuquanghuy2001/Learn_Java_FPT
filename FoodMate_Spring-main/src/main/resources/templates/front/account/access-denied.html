@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Access Denied</title>
+</head>
+<body>
+
+<h2>Access Denied - You are not authorized to access this resource</h2>
+
+<hr>
+
+<div sec:authorize="isAuthenticated()">
+    Logged user: <span sec:authentication="name"></span>
+    <br>
+    Roles: <span sec:authentication="principal.authorities"></span>
+</div>
+
+<div sec:authorize="isAnonymous()">
+    You are not logged in!
+    <a href="/account/login">Login now</a>
+</div>
+
+<hr>
+
+<a href="/">Back to Home Page</a>
+
+<br>
+<br>
+
+<form th:action="@{/logout}" method="POST">
+    <input type="submit" value="Logout" class="btn btn-outline-primary mt-2"/>
+</form>
+
+</body>
+</html>

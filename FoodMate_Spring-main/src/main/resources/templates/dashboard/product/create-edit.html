@@ -1,0 +1,209 @@
+<!doctype html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{dashboard/_layout/master}">
+
+<head>
+
+    <title>Product</title>
+
+</head>
+
+<body>
+
+            <!-- Main -->
+            <div layout:fragment="content" class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-plugin icon-gradient bg-night-fade"></i>
+                            </div>
+                            <div>
+                                Product
+                                <div class="page-title-subheading">
+                                    View, create, update, delete and manage.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+
+                                <form method="post" enctype="multipart/form-data"
+                                      th:action="${#request.requestURI.endsWith('/create')} ? @{|/admin/product/create|} : @{|/admin/product/${product.id}/edit|}"
+                                      th:object="${product}">
+
+                                    <input type="hidden" th:field="*{id}">
+                                    <input type="hidden" th:field="*{image}">
+
+                                    <div class="position-relative row form-group">
+                                        <label for="image" class="col-md-3 text-md-right col-form-label">Images</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <ul class="text-nowrap overflow-auto">
+
+                                                <li class="d-inline-block" id="add-image-icon">
+                                                    <img id="thumbnail" style="height: 150px; cursor: pointer;"
+                                                         class="thumbnail"
+                                                         data-toggle="tooltip" title="Click to add image"
+                                                         data-placement="bottom"
+                                                         th:src="${product.image != null && product.image != ''} ? @{|../front/data-images/products/${product.image}|} : @{|../dashboard/assets/images/add-image-icon.jpg|}"
+                                                         alt="Add Image">
+                                                    <input name="image_file" id="image" type="file" onchange="changeImg(this)" accept="image/*"
+                                                           class="image form-control-file" style="display: none;">
+
+                                                    <input type="hidden" name="image_old" th:value="${product.image}">
+                                                    <small class="form-text text-muted">
+                                                        Look at it, it looks great! (Click on the image to change)
+                                                    </small>
+
+                                                    <div th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="invalid-feedback d-inline-block"></div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="name"
+                                               class="col-md-3 text-md-right col-form-label">Name</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{name}" required name="name" id="name" placeholder="Name" type="text"
+                                                   class="form-control" value="Cocktail Cafe">
+                                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="product_category_id"
+                                               class="col-md-3 text-md-right col-form-label">Category</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <select th:field="*{productCategory}"
+                                                    id="product_category_id" class="form-control" required>
+                                                <option value="">--- Select Item ---</option>
+                                                <option th:each="productCategory: ${productCategories}"
+                                                        th:value="${productCategory.id}"
+                                                        th:text="${productCategory.name}"></option>
+                                            </select>
+                                            <div th:if="${#fields.hasErrors('productCategory')}" th:errors="*{productCategory}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="restaurant"
+                                               class="col-md-3 text-md-right col-form-label">
+                                            Restaurant
+                                        </label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <select th:field="*{restaurant}"
+                                                    id="restaurant" class="form-control" required>
+                                                <option value="">--- Select Item ---</option>
+                                                <option th:each="restaurant: ${restaurants}"
+                                                        th:value="${restaurant.id}"
+                                                        th:text="${restaurant.name}"></option>
+                                            </select>
+                                            <div th:if="${#fields.hasErrors('restaurant')}" th:errors="*{restaurant}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="position-relative row form-group">
+                                        <label for="price"
+                                               class="col-md-3 text-md-right col-form-label">Price</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{price}" required name="price" id="price"
+                                                   placeholder="$ Price" type="number" class="form-control">
+                                            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="ingredients"
+                                               class="col-md-3 text-md-right col-form-label">Ingredients</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{ingredients}" required name="ingredients" id="ingredients"
+                                                   placeholder="ingredients" type="text" class="form-control"
+                                                   value="Base wines, colorants, fragrances, coffee and decorations">
+                                            <div th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="country"
+                                               class="col-md-3 text-md-right col-form-label">Country</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <input th:field="*{country}" required name="country" id="country"
+                                                   placeholder="country" type="text" class="form-control">
+                                            <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-relative row form-group">
+                                        <label for="description"
+                                               class="col-md-3 text-md-right col-form-label">Description</label>
+                                        <div class="col-md-9 col-xl-8">
+                                            <textarea th:field="*{description}" required name="description" id="description">
+                                                A cocktail is an alcoholic mixed drink, which is either a combination of spirits, or one or more spirits mixed with other ingredients such as fruit juice, flavored syrup, or cream.
+                                            </textarea>
+                                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback d-inline-block"></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="position-relative row form-group">
+                                        <label class="col-md-3 text-md-right col-form-label">Feature</label>
+
+                                        <div class="form-check ml-3 mr-3">
+                                            <input th:field="*{featured}" class="form-check-input" type="radio" name="featured" value="1"
+                                                   id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Yes
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input th:field="*{featured}" class="form-check-input" type="radio" name="featured" value="0"
+                                                   id="flexRadioDefault2">
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                No
+                                            </label>
+                                        </div>
+                                        <div th:if="${#fields.hasErrors('featured')}" th:errors="*{featured}" class="invalid-feedback d-inline-block"></div>
+                                    </div>
+
+
+                                    <div class="position-relative row form-group mb-1">
+                                        <div class="col-md-9 col-xl-8 offset-md-2">
+                                            <a href="../admin/product" class="border-0 btn btn-outline-danger mr-1">
+                                                    <span class="btn-icon-wrapper pr-1 opacity-8">
+                                                        <i class="fa fa-times fa-w-20"></i>
+                                                    </span>
+                                                <span>Cancel</span>
+                                            </a>
+
+                                            <span th:replace="dashboard/_fragments/button :: submit"></span>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
+                <script>
+                    CKEDITOR.replace('description');
+                    //https://ckeditor.com/docs/ckfinder/ckfinder3/#!/guide/dev_ckeditor
+                </script>
+            </div>
+            <!-- End Main -->
+
+</body>
+
+</html>
