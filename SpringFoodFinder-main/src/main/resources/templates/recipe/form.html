@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingredient</title>
+</head>
+<body>
+<h1 layout:fragment="content_header">Recipe</h1>
+<div layout:fragment="content">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Create Recipe</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form action="#" th:action="@{/admin/recipe/create}" method="post" th:object="${recipeDto}">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <p>Test p</p>
+                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"> Name must not be null </p>
+                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <p th:if="${#fields.hasErrors('description')}" th:errorclass="error" th:errors="*{description}"> </p>
+                    <label for="exampleInputEmail2">Description</label>
+                    <input type="text" name="description" class="form-control" id="exampleInputEmail2" placeholder="Enter description">
+                </div>
+                <div class="form-group">
+                    <p th:if="${#fields.hasErrors('category_id')}" th:errorclass="error" th:errors="*{category_id}"> </p>
+                    <label for="exampleSelectBorder2">Category</label>
+                    <select  name="category_id" class="custom-select form-control-border" id="exampleSelectBorder2">
+                        <option th:each="p : ${category}" th:value="${p.id}" th:text="${p.name}"></option>
+                    </select>
+                </div>
+                <ul th:if="${#fields.hasErrors('*')}">
+                    <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+                </ul>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

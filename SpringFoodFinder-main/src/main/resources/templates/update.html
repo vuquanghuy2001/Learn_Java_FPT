@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dish</title>
+</head>
+<body>
+<h1 layout:fragment="content_header">Dish</h1>
+<div layout:fragment="content">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Update Dish</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form action="save" method="post">
+            <input type="hidden" name="id" th:value="${dish.id}">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" name="name" th:value="${dish.name}" class="form-control" id="exampleInputEmail1" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelectBorder" >Category </label>
+                    <select  th:name="category_id" class="custom-select form-control-border" id="exampleSelectBorder">
+                        <option th:each="p : ${category}"
+                                th:selected="${dish.id == p.id}"
+                                th:value="${p.id}" th:text="${p.name}+${p.id}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelectBorder2">Recipe</label>
+                    <select th:name="recipe_id"  class="custom-select form-control-border" id="exampleSelectBorder2">
+                        <option th:each="p : ${recipe}"
+                                th:selected="${dish.id == p.id}"
+                                th:value="${p.id}"
+                                th:text="${p.name}+${p.id}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">Image</label>
+                    <input th:value="${dish.image_url}" type="text" name="image" class="form-control" id="exampleInputEmail3" placeholder="Enter image_url">
+                    <img width="75" height="75" th:src="${dish.image_url}">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail4">Method</label>
+                    <input th:value="${dish.method}" type="text" name="method" class="form-control" id="exampleInputEmail4" placeholder="Enter mthod">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail5">Ingredient Description</label>
+                    <input th:value="${dish.ingredient_des}" type="text" name="ingredient_des" class="form-control" id="exampleInputEmail5" placeholder="Enter description">
+                </div>
+
+
+
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

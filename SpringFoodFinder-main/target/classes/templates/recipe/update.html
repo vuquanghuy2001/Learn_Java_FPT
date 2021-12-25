@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Dish</title>
+</head>
+<body>
+<h1 layout:fragment="content_header">Recipe</h1>
+<div layout:fragment="content">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Update Recipe</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form action="save" method="post">
+            <input type="hidden" name="id" th:value="${recipe.id}">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" name="name" th:value="${recipe.name}" class="form-control" id="exampleInputEmail1" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail2">Description</label>
+                    <input type="text" name="description" th:value="${recipe.description}" class="form-control" id="exampleInputEmail2" placeholder="Enter description">
+                </div>
+                <div class="form-group">
+                    <label for="exampleSelectBorder" >Category </label>
+                    <select  th:name="category_id" class="custom-select form-control-border" id="exampleSelectBorder">
+                        <option th:each="p : ${category}"
+                                th:selected="${recipe.category_id == p.id}"
+                                th:value="${p.id}" th:text="${p.name}"></option>
+                    </select>
+                </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

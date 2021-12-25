@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1 layout:fragment="content_header">Statistical</h1>
+<div layout:fragment="content">
+    <h1 th:text="'Total dish: ' + ${totalDish} "></h1>
+    <h1 th:text="'Total ingredient: ' + ${totalIngredient} "></h1>
+    <h1 th:text="'Total category: ' + ${totalCategory} "></h1>
+    <h1 th:text="'Total recipe: ' + ${totalRecipe} "></h1>
+    <h1 th:text="'Total customer: ' + ${totalCustomer} "></h1>
+    <h1 th:text="'Total cart: ' + ${totalCart} "></h1>
+</div>
+</body>
+</html>

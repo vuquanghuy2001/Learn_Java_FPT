@@ -23,7 +23,6 @@ public class EmployeeController {
         Employee emp1 = new Employee(1,"Vu","Huy","vuquanghuyxl1234@gmail.com");
         Employee emp2 = new Employee(2,"Truong","Trinh","trinh55200@gmail.com");
 
-        theEmployees = new ArrayList<>();
 
         theEmployees.add(emp1);
         theEmployees.add(emp2);
