@@ -2,21 +2,20 @@ package com.example.ss3.controller;
 
 import com.example.ss3.dto.UserDto;
 import com.example.ss3.entity.DishEntity;
-import com.example.ss3.entity.IngredientEntity;
 import com.example.ss3.entity.ProductEntity;
 import com.example.ss3.entity.RecipeEntity;
-import com.example.ss3.service.*;
+import com.example.ss3.service.DishService.DishService;
+import com.example.ss3.service.IngredientService.IngredientService;
+import com.example.ss3.service.ProductService.ProductService;
+import com.example.ss3.service.RecipeService.RecipeService;
+import com.example.ss3.service.UserService.UserCustomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.model.IModel;
-import sun.reflect.generics.scope.Scope;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 

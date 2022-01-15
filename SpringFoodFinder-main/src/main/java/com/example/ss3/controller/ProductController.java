@@ -3,7 +3,7 @@ package com.example.ss3.controller;
 import com.example.ss3.dto.ProductDto;
 import com.example.ss3.entity.ProductEntity;
 import com.example.ss3.model.BaseResponse;
-import com.example.ss3.service.ProductService;
+import com.example.ss3.service.ProductService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.example.ss3.controller.api;
 
 import com.example.ss3.model.BaseResponse;
-import com.example.ss3.service.IngredientService;
+import com.example.ss3.service.IngredientService.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

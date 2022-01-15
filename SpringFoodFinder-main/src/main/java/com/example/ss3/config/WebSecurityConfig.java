@@ -1,7 +1,7 @@
 package com.example.ss3.config;
 
 import com.example.ss3.filters.JwtRequestFilter;
-import com.example.ss3.service.UserService;
+import com.example.ss3.service.UserService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.antMatcher("/**").csrf().disable().authorizeRequests()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/css/**", "/js/**").permitAll()
                 .antMatchers("/login/**","/register/**").permitAll()
 //                .antMatchers("/api/**").permitAll()

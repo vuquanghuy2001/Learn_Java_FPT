@@ -1,11 +1,9 @@
 package com.example.ss3.controller;
 
 import com.example.ss3.entity.CartEntity;
-import com.example.ss3.entity.CategoryEntity;
 import com.example.ss3.entity.StatusEntity;
-import com.example.ss3.service.CartService;
-import com.example.ss3.service.StatusService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.example.ss3.service.CartService.CartService;
+import com.example.ss3.service.StatusService.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

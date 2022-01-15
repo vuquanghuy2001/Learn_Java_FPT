@@ -91,4 +91,12 @@ public class UserEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Collection<CartEntity> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Collection<CartEntity> carts) {
+        this.carts = carts;
+    }
 }

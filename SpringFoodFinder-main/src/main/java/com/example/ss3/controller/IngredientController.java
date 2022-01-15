@@ -1,10 +1,7 @@
 package com.example.ss3.controller;
 
-import com.example.ss3.entity.CategoryEntity;
-import com.example.ss3.entity.DishEntity;
 import com.example.ss3.entity.IngredientEntity;
-import com.example.ss3.entity.RecipeEntity;
-import com.example.ss3.service.IngredientService;
+import com.example.ss3.service.IngredientService.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

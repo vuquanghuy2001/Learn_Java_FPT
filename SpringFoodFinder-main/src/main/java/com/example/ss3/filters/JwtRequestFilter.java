@@ -1,6 +1,6 @@
 package com.example.ss3.filters;
 
-import com.example.ss3.service.UserService;
+import com.example.ss3.service.UserService.UserService;
 import com.example.ss3.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,18 +1,15 @@
 package com.example.ss3.controller;
 
 import com.example.ss3.dto.RecipeDto;
-import com.example.ss3.dto.UserDto;
 import com.example.ss3.entity.CategoryEntity;
-import com.example.ss3.entity.DishEntity;
 import com.example.ss3.entity.RecipeEntity;
-import com.example.ss3.service.CategoryService;
-import com.example.ss3.service.RecipeService;
+import com.example.ss3.service.CategoryService.CategoryService;
+import com.example.ss3.service.RecipeService.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
